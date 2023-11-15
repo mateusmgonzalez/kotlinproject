@@ -94,6 +94,3 @@ networks:
     driver: bridge
   kafka_net:
     driver: bridge
-
-volumes:
-  postgres_data:
