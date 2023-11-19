@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "3.1.5"
+    id("org.springframework.boot") version "3.0.4"
     id("io.spring.dependency-management") version "1.1.3"
     kotlin("jvm") version "1.8.22"
     kotlin("plugin.spring") version "1.8.22"
@@ -25,6 +25,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation ("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+    implementation ("org.springframework.cloud:spring-cloud-commons")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -47,4 +49,12 @@ tasks.withType<Test> {
 
 tasks.bootBuildImage {
     builder.set("paketobuildpacks/builder-jammy-base:latest")
+}
+
+
+dependencyManagement {
+    imports {
+
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.1")
+    }
 }

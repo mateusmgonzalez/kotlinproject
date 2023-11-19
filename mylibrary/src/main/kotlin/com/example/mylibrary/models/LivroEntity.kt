@@ -7,8 +7,9 @@ import jakarta.persistence.*
 @Table(name = "livros")
 data class LivroEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long?,
-    val nome: String,
+    val titulo: String,
     val autor: String,
-    val edicao: Int
+    val edicao: Int,
+    val preco: Long
 ) {
 }

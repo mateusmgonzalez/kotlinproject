@@ -10,17 +10,18 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-    networks:
-      - db_net
-
 
   redis:
     image: redis:latest
     container_name: redis-container
     ports:
       - "6379:6379"
-    networks:
-      - redis_net
+
+  eureka:
+    build: springcloud/eurekaserver
+    ports:
+      - "8761:8761"
+
 
   mylibrary:
     build:
@@ -31,8 +32,7 @@ services:
       - postgres
       - redis
       - kafka
-    ports:
-      - "8080:8080"
+      - eureka
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/livraria
       SPRING_DATASOURCE_USERNAME: postgres
@@ -40,18 +40,13 @@ services:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
       SPRING_KAFKA_URL: kafka:9092
-    networks:
-      - db_net
-      - redis_net
-      - kafka_net
+
 
   recomendacoes:
     build:
       context: ./recomendacoes/
       dockerfile: Dockerfile
     container_name: recomendacoes-container
-    ports:
-      - "8081:8081"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/livraria
       SPRING_DATASOURCE_USERNAME: postgres
@@ -60,17 +55,16 @@ services:
     depends_on:
       - postgres
       - kafka
-    networks:
-      - db_net
-      - kafka_net
+      - zookeeper
+      - eureka
+
 
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
     ports:
       - "2181:2181"
-    networks:
-      - kafka_net
+
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -84,13 +78,5 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
       - zookeeper
-    networks:
-      - kafka_net
 
-networks:
-  db_net:
-    driver: bridge
-  redis_net:
-    driver: bridge
-  kafka_net:
-    driver: bridge
+

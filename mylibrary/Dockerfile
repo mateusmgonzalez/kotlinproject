@@ -1,14 +1,15 @@
-# Use the official OpenJDK image as a base image
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:17.0.5_8-jre-focal as builder
+WORKDIR extracted
+ADD ./build/libs/*.jar app.jar
+RUN java -Djarmode=layertools -jar app.jar extract
 
-# Set the working directory in the container
-WORKDIR /app
+FROM eclipse-temurin:17.0.5_8-jre-focal
+WORKDIR application
+COPY --from=builder extracted/dependencies/ ./
+COPY --from=builder extracted/spring-boot-loader/ ./
+COPY --from=builder extracted/snapshot-dependencies/ ./
+COPY --from=builder extracted/application/ ./
 
-# Copy the JAR file into the container at /app
-COPY build/libs/mylibrary-0.0.1-SNAPSHOT.jar /app/mylibrary-0.0.1-SNAPSHOT.jar
+EXPOSE 8761
 
-# Expose the port that the application will run on
-EXPOSE 8080
-
-# Specify the command to run on container start
-CMD ["java", "-jar", "mylibrary-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]

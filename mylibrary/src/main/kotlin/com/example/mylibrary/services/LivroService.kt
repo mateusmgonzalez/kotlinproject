@@ -28,7 +28,7 @@ class LivroService(@Autowired private val repository: LivroRepository, @Autowire
     fun createLivro(createLivro: CreateLivro)  {
         repository.save(LivroMapper.from(createLivro))
 
-        val recomendacaoEvent = RecomendacaoEvent(UUID.randomUUID().toString(), createLivro.nome, createLivro.autor, RecomendacaoEventType.CRIADO)
+        val recomendacaoEvent = RecomendacaoEvent(UUID.randomUUID().toString(), createLivro.titulo, createLivro.autor, RecomendacaoEventType.CRIADO)
         kafkaTemplate.send("livro-adicionado", recomendacaoEvent.eventId, recomendacaoEvent )
 
     }
