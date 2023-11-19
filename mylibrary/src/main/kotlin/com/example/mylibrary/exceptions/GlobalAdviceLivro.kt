@@ -14,19 +14,19 @@ import java.time.LocalDateTime
 @ControllerAdvice
 class GlobalAdviceLivro {
 
-    @ExceptionHandler(Exception::class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleException(ex: Exception, request: WebRequest): ResponseEntity<ErrorResponse> {
-        val errorResponse = ErrorResponse(
-            timestamp = LocalDateTime.now(),
-            statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            exceptionName = ex.javaClass.simpleName,
-            path = request.contextPath,
-            cause = ex.cause
-        )
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse)
-    }
+//    @ExceptionHandler(Exception::class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    fun handleException(ex: Exception, request: WebRequest): ResponseEntity<ErrorResponse> {
+//        val errorResponse = ErrorResponse(
+//            timestamp = LocalDateTime.now(),
+//            statusCode = HttpStatus.INTERNAL_SERVER_ERROR.value(),
+//            exceptionName = ex.javaClass.simpleName,
+//            path = request.contextPath,
+//            cause = ex.cause
+//        )
+//
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse)
+//    }
 
     @ExceptionHandler(NotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

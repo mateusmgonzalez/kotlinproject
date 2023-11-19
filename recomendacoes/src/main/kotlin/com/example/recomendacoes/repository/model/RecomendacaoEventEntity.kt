@@ -11,7 +11,7 @@ data class RecomendacaoEventEntity(
     @Id @GeneratedValue(strategy = GenerationType.UUID) val id : UUID? = null,
     val eventId: String,
     @Enumerated(value = EnumType.STRING) val recomendacaoEventType: RecomendacaoEventType,
-    val nome : String,
+    val titulo : String,
     val autor: String
 ) {
     constructor() : this(null,"",  RecomendacaoEventType.CRIADO, "", "")

@@ -12,3 +12,5 @@ eureka:
   server:
     waitTimeInMsWhenSyncEmpty: 0
     initial-capacity-of-response-cache: 5000
+
+management.endpoints.web.exposure.include: "*"

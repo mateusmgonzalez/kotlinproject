@@ -10,7 +10,7 @@ class RecomendacaoEventMapper {
     companion object {
 
         fun to(recomendacaoEvent: RecomendacaoEvent) : RecomendacaoEventEntity {
-            return RecomendacaoEventEntity(recomendacaoEvent.eventId, recomendacaoEvent.eventType, recomendacaoEvent.nome, recomendacaoEvent.autor)
+            return RecomendacaoEventEntity(recomendacaoEvent.eventId, recomendacaoEvent.eventType, recomendacaoEvent.titulo, recomendacaoEvent.autor)
         }
     }
 }
