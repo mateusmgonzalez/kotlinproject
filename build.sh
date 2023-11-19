@@ -19,4 +19,11 @@ cd ./springcloud/eurekaserver
 
 cd ../..
 
+pwd
+cd springcloud/apigateway
+
+./gradlew build -x test
+
+cd ../..
+
 docker compose up

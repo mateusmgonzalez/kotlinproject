@@ -40,9 +40,6 @@ services:
       SPRING_REDIS_HOST: redis
       SPRING_REDIS_PORT: 6379
       SPRING_KAFKA_URL: kafka:9092
-    ports:
-      - "8080:8080"
-
 
   recomendacoes:
     build:
@@ -82,3 +79,9 @@ services:
       - zookeeper
 
 
+  gateway:
+    build:
+      context: springcloud/apigateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
